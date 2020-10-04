@@ -1,0 +1,27 @@
+.modal-dialog {
+    /* width: auto !important; */
+    max-width: 880px !important;
+    margin: 1.75rem auto;
+}
+
+#exampleModal input {
+    width:70px;
+}
+
+#floaty {
+    position: fixed;
+    z-index: 30;
+    width:auto;
+    padding: 10px;
+    background-color: lightgray;
+    right: 5px;
+    top: 50px;
+    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#foot {
+    text-align:center;
+}
