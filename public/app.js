@@ -130,5 +130,6 @@ $("#make").click(function() {
     arr.push(inputs[i].value);
   }
   db.collection("tables").doc(userName).set({subjects: arr});
-  console.log(arr);
+  setTimeout(function(){ location.reload() }, 1000);
+  // console.log(arr);
 })
