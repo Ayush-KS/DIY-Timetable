@@ -1,11 +1,19 @@
 A Firebase web app for building your very own timetable and viewing your mates' timetables!
-
+Find it hosted at [https://diy-timetable.web.app/](https://diy-timetable.web.app/)
 
 ## How to use
 
 1. Clone the repository using `git clone https://github.com/Ayush-KS/DIY-Timetable.git`
 2. Create a firebase project of your own from `https://firebase.google.com/`
-3. Edit the `.firebaserc` file in root directory and change the project name from `DIY-Timetable` to your project name.
+3. Edit the `.firebaserc` file in root directory and change the project name from `diy-timetable` to your project name.
+    In case the file is not present in you root directory, create a `.firebaserc` file and in it add:
+    ```
+    {
+      "projects": {
+        "default": "diy-timetable"
+      }
+    }
+    ```
 4. Run firebase init in root directory and make sure you have firebase cli and related libraries and you are logged in.
 5. Let all the default settings run but choose `y` for `single page app`.
 6. Start the project with `firebase serve`.
