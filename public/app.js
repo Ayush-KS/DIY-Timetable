@@ -20,6 +20,8 @@ const signOutBtn = document.getElementById('signOutBtn');
 
 const userDetails = document.getElementById('welcome');
 
+const createButton = document.getElementById('createTable');
+const resetButton = document.getElementById('reset');
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -27,7 +29,11 @@ const provider = new firebase.auth.GoogleAuthProvider();
 
 signInBtn.onclick = () => auth.signInWithPopup(provider);
 
-signOutBtn.onclick = () => auth.signOut();
+signOutBtn.onclick = () => 
+{
+  auth.signOut();
+  createButton.innerHTML = "Create a Time Table";
+}
 
 var userName;
 
@@ -38,6 +44,14 @@ auth.onAuthStateChanged(user => {
         whenSignedOut.hidden = true;
         userDetails.innerHTML = `<h6>Hey ${user.displayName}!</h6>`;
         userName = user.displayName;
+
+        // smart switch between create and edit table
+
+        db.collection("tables").doc(userName).get().then((snapshot)=>{
+          if(snapshot.exists){
+            createButton.innerHTML = "Edit your Time Table";
+          }
+        })
     } else {
         // not signed in
         whenSignedIn.hidden = true;
@@ -55,7 +69,6 @@ ref.get()
     //var i = 0;
     querySnapshot.forEach(function(doc) {
         // doc.data() is never undefined for query doc snapshots
-
         var columnDefs = [
           {headerName: "Day", field: "day", width: 120},
           {headerName: "8-9", field: "eight", width: 120 },
@@ -122,6 +135,30 @@ ref.get()
 });
 
 
+// Autocomplete table functionality
+
+createButton.onclick = ()=>{
+  let inputs = $("td input");
+  db.collection("tables").doc(userName).get().then((snapshot)=>{
+    if(!snapshot.exists){
+      return;
+    }
+    let subData = snapshot.data().subjects;
+    for(let i = 0; i < subData.length; i++){
+      inputs[i].value = subData[i];
+      console.log(inputs[i].value, inputs[i].placeholder , subData[i]);
+    }
+  })
+}
+
+// reset button functionality
+
+resetButton.onclick = ()=>{
+  let inputs = $("td input");
+  for(let i = 0; i < inputs.length; i++){
+    inputs[i].value = "";
+  }
+}
 
 $("#make").click(function() {
   var inputs = $("td input");
